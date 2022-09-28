@@ -2,32 +2,41 @@ import React, { useState } from "react";
 
 import AddUser from "./components/Users/AddUser";
 import Card from "./components/UI/Card";
-
-import styles from "./components/UI/Card.module.css";
 import UsersList from "./components/Users/UsersList";
+
+import cardStyles from "./components/UI/Card.module.css";
+import userListStyles from "./components/Users/UsersList.module.css";
 
 function App() {
   const [userInfo, setUserInfo] = useState([]);
 
-  function onAddUserHandler(enteredValue) {
+  function onAddUserHandler(enteredUserName, enteredAge) {
     setUserInfo((prevValue) => {
       const updatedValue = [...prevValue];
-      updatedValue.unshift({ text: enteredValue, id: Math.random().toString() });
+      updatedValue.unshift({
+        text: enteredUserName,
+        age: enteredAge,
+        id: Math.random().toString(),
+      });
       return updatedValue;
     });
   }
 
   let content = (
-    <p style={{ textAlign: "center", color: "white" }}>Please Add Users Infomation</p>
+    <p style={{ textAlign: "center", color: "white" }}>Please Add Users Infomation.</p>
   );
 
   if (userInfo.length > 0) {
-    content = <UsersList items={userInfo} />;
+    content = (
+      <Card className={`${cardStyles.card} ${userListStyles.users}`}>
+        <UsersList items={userInfo} />
+      </Card>
+    );
   }
   return (
     <div>
       <section>
-        <Card className={styles.card}>
+        <Card className={cardStyles.card}>
           <AddUser onAddUser={onAddUserHandler} />
         </Card>
       </section>
