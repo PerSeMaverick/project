@@ -1,10 +1,10 @@
 import React from "react";
 import styles from "./Button.module.css";
 
-function Button() {
+function Button(props) {
   return (
-    <button className={styles.button} type="submit">
-      Add User
+    <button className={styles.button} type={props.children}>
+      {props.children}
     </button>
   );
 }
