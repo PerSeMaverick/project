@@ -28,6 +28,7 @@ function AddUser(props) {
       return;
     }
     props.onAddUser(usernameInput, ageInput);
+    event.target.reset();
   }
 
   return (
