@@ -22,6 +22,13 @@ function App() {
     });
   }
 
+  function onDeleteHandler(userId) {
+    setUserInfo((prevValue) => {
+      const updatedValue = prevValue.filter((info) => userId !== info.id);
+      return updatedValue;
+    });
+  }
+
   let content = (
     <p style={{ textAlign: "center", color: "white" }}>Please Add Users Infomation.</p>
   );
@@ -29,7 +36,7 @@ function App() {
   if (userInfo.length > 0) {
     content = (
       <Card className={`${cardStyles.card} ${userListStyles.users}`}>
-        <UsersList items={userInfo} />
+        <UsersList items={userInfo} onDelete={onDeleteHandler} />
       </Card>
     );
   }
