@@ -27,7 +27,7 @@ function AddUser(props) {
     }
   }
 
-  let erorrModalContent = <></>;
+  let erorrModalContent;
 
   const closeModal = () => {
     setErorrModal(!erorrModal);
@@ -36,8 +36,9 @@ function AddUser(props) {
   function formSubmitHandler(event) {
     event.preventDefault();
     if (usernameInput.trim().length === 0 || ageInput.trim().length === 0) {
-      setIsValid(false);
-      setErorrModal(true);
+      setIsValid(!isValid);
+      setErorrModal(!erorrModal);
+      console.log(erorrModal);
       if (!erorrModal) {
         erorrModalContent = (
           <Card className="card">
@@ -48,10 +49,11 @@ function AddUser(props) {
           </Card>
         );
       }
+      console.log(erorrModalContent);
       return;
     } else if (!Number.isInteger(ageInput)) {
-      setIsValid(false);
-      setErorrModal(true);
+      setIsValid(!isValid);
+      setErorrModal(!erorrModal);
       if (!erorrModal) {
         erorrModalContent = (
           <Card className="card">
