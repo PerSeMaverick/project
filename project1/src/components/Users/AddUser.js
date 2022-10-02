@@ -3,8 +3,7 @@ import Button from "../UI/Button";
 
 import styles from "./AddUser.module.css";
 import ErorrModule from "../UI/ErorrModule";
-
-import errorStyle from "../UI/ErorrModule.module.css";
+import Card from "../UI/Card";
 
 function AddUser(props) {
   const [usernameInput, setUsernameInput] = useState("");
@@ -15,6 +14,7 @@ function AddUser(props) {
   function usernameInputChangeHandler(event) {
     if (event.target.value) {
       setIsValid(true);
+      setErorrModal(false);
       setUsernameInput(event.target.value);
     }
   }
@@ -22,19 +22,43 @@ function AddUser(props) {
   function ageInputChangeHandler(event) {
     if (event.target.value) {
       setIsValid(true);
+      setErorrModal(false);
       setAgeInput(event.target.value);
     }
   }
 
+  let erorrModalContent = <></>;
+
+  const closeModal = () => {
+    setErorrModal(!erorrModal);
+  };
+
   function formSubmitHandler(event) {
     event.preventDefault();
-    if (usernameInput.trim().length === 0) {
+    if (usernameInput.trim().length === 0 || ageInput.trim().length === 0) {
       setIsValid(false);
       setErorrModal(true);
+      if (!erorrModal) {
+        erorrModalContent = (
+          <Card className="card">
+            <ErorrModule
+              text="Please Enter a vaild name and age (non-empty value)"
+              closeModal={closeModal}
+            />
+          </Card>
+        );
+      }
       return;
-    } else if (ageInput.trim().length === 0) {
+    } else if (!Number.isInteger(ageInput)) {
       setIsValid(false);
       setErorrModal(true);
+      if (!erorrModal) {
+        erorrModalContent = (
+          <Card className="card">
+            <ErorrModule text="Please enter a vaild age." closeModal={closeModal} />
+          </Card>
+        );
+      }
       return;
     }
     props.onAddUser(usernameInput, ageInput);
@@ -43,7 +67,7 @@ function AddUser(props) {
 
   return (
     <div>
-      {erorrModal && <ErorrModule className={errorStyle.backdrop} />}
+      {erorrModalContent}
       <form
         className={`${styles.input} ${!isValid && styles.inValid}`}
         onSubmit={formSubmitHandler}
