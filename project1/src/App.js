@@ -30,7 +30,9 @@ function App() {
   }
 
   let content = (
-    <p style={{ textAlign: "center", color: "white" }}>Please Add Users Infomation.</p>
+    <p style={{ textAlign: "center", color: "white" }}>
+      Please Add Users Infomation.
+    </p>
   );
 
   if (userInfo.length > 0) {

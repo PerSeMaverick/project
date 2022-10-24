@@ -1,9 +1,10 @@
 import React, { useState } from "react";
+
+import Card from "../UI/Card";
 import Button from "../UI/Button";
+import ErorrModule from "../UI/ErorrModule";
 
 import styles from "./AddUser.module.css";
-import ErorrModule from "../UI/ErorrModule";
-import Card from "../UI/Card";
 
 function AddUser(props) {
   const [usernameInput, setUsernameInput] = useState("");
@@ -38,33 +39,27 @@ function AddUser(props) {
     if (usernameInput.trim().length === 0 || ageInput.trim().length === 0) {
       setIsValid(!isValid);
       setErorrModal(!erorrModal);
-      console.log(erorrModal);
-      if (!erorrModal) {
-        erorrModalContent = (
-          <Card className="card">
-            <ErorrModule
-              text="Please Enter a vaild name and age (non-empty value)"
-              closeModal={closeModal}
-            />
-          </Card>
-        );
-      }
-      console.log(erorrModalContent);
-      return;
-    } else if (!Number.isInteger(ageInput)) {
+      erorrModalContent = (
+        <Card className="card">
+          <ErorrModule
+            text="Please Enter a vaild name and age (non-empty value)"
+            closeModal={closeModal}
+          />
+        </Card>
+      );
+    } else if (+ageInput < 0) {
       setIsValid(!isValid);
       setErorrModal(!erorrModal);
-      if (!erorrModal) {
-        erorrModalContent = (
-          <Card className="card">
-            <ErorrModule text="Please enter a vaild age." closeModal={closeModal} />
-          </Card>
-        );
-      }
-      return;
+      erorrModalContent = (
+        <Card className="card">
+          <ErorrModule text="Please enter a vaild age." closeModal={closeModal} />
+        </Card>
+      );
+    } else if (usernameInput.trim().length !== 0 || ageInput.trim().length !== 0) {
+      props.onAddUser(usernameInput, ageInput);
     }
-    props.onAddUser(usernameInput, ageInput);
-    event.target.reset();
+    setUsernameInput("");
+    setAgeInput("");
   }
 
   return (
@@ -75,10 +70,20 @@ function AddUser(props) {
         onSubmit={formSubmitHandler}
       >
         <label htmlFor="username">Username</label>
-        <input id="username" type="text" onChange={usernameInputChangeHandler} />
+        <input
+          id="username"
+          type="text"
+          value={usernameInput}
+          onChange={usernameInputChangeHandler}
+        />
 
         <label htmlFor="age">Age (Years)</label>
-        <input id="age" type="number" onChange={ageInputChangeHandler} />
+        <input
+          id="age"
+          type="number"
+          value={ageInput}
+          onChange={ageInputChangeHandler}
+        />
         <Button type="submit">Add User</Button>
       </form>
     </div>
