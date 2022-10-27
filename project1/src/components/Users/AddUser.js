@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-import Card from "../UI/Card";
 import Button from "../UI/Button";
 import ErorrModule from "../UI/ErorrModule";
 
@@ -10,12 +9,11 @@ function AddUser(props) {
   const [usernameInput, setUsernameInput] = useState("");
   const [ageInput, setAgeInput] = useState("");
   const [isValid, setIsValid] = useState(true);
-  const [erorrModal, setErorrModal] = useState(false);
+  const [erorrModal, setErorrModal] = useState();
 
   function usernameInputChangeHandler(event) {
     if (event.target.value) {
       setIsValid(true);
-      setErorrModal(false);
       setUsernameInput(event.target.value);
     }
   }
@@ -23,38 +21,28 @@ function AddUser(props) {
   function ageInputChangeHandler(event) {
     if (event.target.value) {
       setIsValid(true);
-      setErorrModal(false);
       setAgeInput(event.target.value);
     }
   }
 
-  let erorrModalContent;
-
   const closeModal = () => {
-    setErorrModal(!erorrModal);
+    setErorrModal(null);
   };
 
   function formSubmitHandler(event) {
     event.preventDefault();
     if (usernameInput.trim().length === 0 || ageInput.trim().length === 0) {
       setIsValid(!isValid);
-      setErorrModal(!erorrModal);
-      erorrModalContent = (
-        <Card className="card">
-          <ErorrModule
-            text="Please Enter a vaild name and age (non-empty value)"
-            closeModal={closeModal}
-          />
-        </Card>
-      );
-    } else if (+ageInput < 0) {
+      setErorrModal({
+        title: "An error ocurred!",
+        message: "Please Enter a vaild name and age (non-empty value)",
+      });
+    } else if (+ageInput < 1) {
       setIsValid(!isValid);
-      setErorrModal(!erorrModal);
-      erorrModalContent = (
-        <Card className="card">
-          <ErorrModule text="Please enter a vaild age." closeModal={closeModal} />
-        </Card>
-      );
+      setErorrModal({
+        title: "An error ocurred!",
+        message: "Please enter a vaild age.",
+      });
     } else if (usernameInput.trim().length !== 0 || ageInput.trim().length !== 0) {
       props.onAddUser(usernameInput, ageInput);
     }
@@ -64,7 +52,13 @@ function AddUser(props) {
 
   return (
     <div>
-      {erorrModalContent}
+      {erorrModal && (
+        <ErorrModule
+          title={erorrModal.title}
+          message={erorrModal.message}
+          onCloseModal={closeModal}
+        />
+      )}
       <form
         className={`${styles.input} ${!isValid && styles.inValid}`}
         onSubmit={formSubmitHandler}
