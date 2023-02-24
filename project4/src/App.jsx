@@ -1,17 +1,16 @@
-import "./App.css";
-import "./component/UI/Card/Card";
+import React from "react";
+
+import style from "./App.module.css";
+
+import Sidebar from "./Component/Side/Sidebar";
+import Contents from "./Component/Side/Contents";
 
 function App() {
   return (
-    <div className="App">
-      <Card>
-        <sidebar className="App-sidebar">
-          <SidebarHead></SidebarHead>
-          <SidebarUnder></SidebarUnder>
-        </sidebar>
-        <MainFeed></MainFeed>
-      </Card>
-    </div>
+    <section className={style.content}>
+      <Sidebar />
+      <Contents />
+    </section>
   );
 }
 
