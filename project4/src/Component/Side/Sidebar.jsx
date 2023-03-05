@@ -6,12 +6,11 @@ import HeaderProfileIcon from "../UI/Asset/HeaderProfileIcon";
 import HeaderScrapIcon from "../UI/Asset/HeaderScrapIcon";
 import HeaderSettingIcon from "../UI/Asset/HeaderSettingIcon";
 
-const handleOpenNews = () => {};
-const handleOpenRealEstate = () => {};
-const handleOpenStock = () => {};
-const handleOpenBooks = () => {};
-
 const Sidebar = () => {
+  const handleOpenNews = () => {};
+  const handleOpenRealEstate = () => {};
+  const handleOpenStock = () => {};
+  const handleOpenBooks = () => {};
   return (
     <div className={style.container}>
       <header className={style.header}>

@@ -5,9 +5,10 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 import "./btn.module.css";
 
 const HeaderProfileIcon = () => {
+  const personalSettingsHandler = () => {};
   return (
     <button>
-      <FontAwesomeIcon icon={faUser} />
+      <FontAwesomeIcon icon={faUser} onClick={personalSettingsHandler} />
     </button>
   );
 };
