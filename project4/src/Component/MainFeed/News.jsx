@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./News.module.css";
+import style from "./News.module.css";
 
 import NewsItem from "./News/NewsItem";
 

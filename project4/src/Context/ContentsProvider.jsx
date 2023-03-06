@@ -34,10 +34,10 @@ const ContentsProvider = (props) => {
           />
         ),
       };
+    } else if (action.type === realEstate) {
+      oldFeed.type = action.type;
+      return <RealEstate onClick={showRealEstate} />;
     }
-    // } else if (action.type === realEstate) {
-    //   oldFeed.type = action.type;
-    //   return <RealEstate onClick={showRealEstate} />;
     // } else if (action.type === stock) {
     //   oldFeed.type = action.type;
     //   return <Stock onClick={showStock} />;
@@ -55,9 +55,9 @@ const ContentsProvider = (props) => {
   const showNews = () => {
     feedActionDispatch({ type: news });
   };
-  // const showRealEstate = () => {
-  //   feedActionDispatch({ type: realEstate });
-  // };
+  const showRealEstate = () => {
+    feedActionDispatch({ type: realEstate });
+  };
   // const showStock = () => {
   //   feedActionDispatch({ type: stock });
   // };
@@ -69,6 +69,7 @@ const ContentsProvider = (props) => {
     type: feedState.type,
     content: feedState.content,
     showNews: showNews,
+    showRealEstate: showRealEstate,
   };
   return (
     <ContentsProvider value={feedStateContext}>

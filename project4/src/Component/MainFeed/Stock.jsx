@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./Stock.module.css";
+import style from "./Stock.module.css";
 
 const Stock = () => {
   return <></>;
