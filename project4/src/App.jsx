@@ -6,11 +6,8 @@ import ContentsProvider from "./Context/ContentsProvider";
 import Sidebar from "./Component/Side/Sidebar";
 import Contents from "./Component/Side/Contents";
 
-import xml2js from "xml2js";
-
 function App() {
   const [news, setNews] = useState([]);
-  const [realEstate, setRealEstate] = useState([]);
   // const [stock, setStock] = useState([]);
   // const [books, setBooks] = useState([]);
 
@@ -36,47 +33,9 @@ function App() {
     }
   }, []);
 
-  const fetchRealEstateHandler = useCallback(async () => {
-    setIsLoading(true);
-    setError(null);
-
-    const regionCode = 11110;
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, "0");
-    const dateString = `${year}${month}`;
-
-    const url = new URL(
-      `http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptRent?LAWD_CD=${regionCode}&DEAL_YMD=${dateString}&serviceKey=FkOoYVr4dD43dtfR%2BDBRdIIjzQCi9DpwtSAxs4KOgktHmxHRqWQqLq6SEN3qPeys5doC0IEgjmsnrdK6LPW3oQ%3D%3D`
-    );
-    try {
-      const response = await fetch(url);
-      const xmlData = await response.text();
-      // const parser = new DOMParser();
-      // const xml = parser.parseFromString(xmlData, "text/xml");
-
-      const parseString = xml2js.parseString;
-
-      parseString(xmlData, (err, result) => {
-        if (err) {
-          console.error(err);
-        } else {
-          const json = JSON.stringify(result);
-          console.log(json);
-        }
-      });
-      setRealEstate([json]);
-      setIsLoading(false);
-    } catch (error) {
-      console.error(error);
-      setError(error.message);
-    }
-  }, []);
-
   useEffect(() => {
     fetchNewsHandler();
-    fetchRealEstateHandler();
-  }, [fetchNewsHandler, fetchRealEstateHandler]);
+  }, [fetchNewsHandler]);
 
   let content = <h2>Found no News</h2>;
 
@@ -92,7 +51,6 @@ function App() {
 
   const fetchedData = {
     news: news,
-    realEstate: realEstate,
   };
 
   return (

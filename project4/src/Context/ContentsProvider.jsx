@@ -1,12 +1,12 @@
 import React, { useReducer } from "react";
 
 import News from "../Component/MainFeed/News";
-// import RealEstate from "../MainFeed/RealEstate";
+import RealEstate from "../Component/MainFeed/RealEstate";
 // import Stock from "../MainFeed/Stock";
 // import Books from "../MainFeed/Books";
 
 const news = "NEWS";
-// const realEstate = "REAL ESTATE";
+const realEstate = "REAL ESTATE";
 // const stock = "STOCK";
 // const books = "BOOKS";
 
@@ -27,6 +27,7 @@ const ContentsProvider = (props) => {
         type: oldFeed.type,
         content: (
           <News
+            onClick={showNews}
             originallink={props.data.news.originallink}
             title={props.data.news.title}
             description={props.data.news.description}
@@ -36,7 +37,10 @@ const ContentsProvider = (props) => {
       };
     } else if (action.type === realEstate) {
       oldFeed.type = action.type;
-      return <RealEstate onClick={showRealEstate} />;
+      return {
+        type: oldFeed.type,
+        content: <RealEstate onClick={showRealEstate} />,
+      };
     }
     // } else if (action.type === stock) {
     //   oldFeed.type = action.type;
