@@ -1,0 +1,9 @@
+.App {
+  color: bisque;
+  width: 100%;
+}
+
+.App h1 {
+  text-align: center;
+  color: rgb(0, 102, 102);
+}
